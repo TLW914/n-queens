@@ -107,15 +107,43 @@
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
-    //
-    // test if a specific column on this board contains a conflict
+   
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var rows = this.rows();
+      var columnValues = [];
+      //Accumulates the values of a given column to a single value. 
+      //If > 1, there is more than 1 piece in a given column. 
+      var qtyPieces = columnValues.reduce(function(accumulator, piece) {
+        return accumulator += piece;
+      }, 0);
+
+      //Pushes each value of every row at a given index
+      for (var r = 0; r < rows.length; r++) {
+        columnValues.push(rows[r][colIndex]);
+      }
+
+      //Evaluates whether or not there is more than 1 piece in a column
+      if ((columnValues.reduce(function(accumulator, piece) {
+        return accumulator += piece;
+      }, 0)) > 1) {
+        return true; 
+      } else {
+        return false; 
+      }
+
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var qtyColumns = this.rows().length - 1;
+      debugger;
+      var result = false; 
+      for (var c = 0; c <= qtyColumns; c++) {
+        if (this.hasColConflictAt(c)) {
+          result = true; 
+        }
+      }
+      return result;
     },
 
 
