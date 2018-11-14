@@ -152,8 +152,14 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    hasMajorDiagonalConflictAt: function(startingIndex) {
+      var firstRow = this.rows()[0];
+      var boardSize = this.rows().length;
+      var majorValues = [];
+
+      for (var i = 0; i < boardSize; i++) {
+        major
+      } 
     },
 
     // test if any major diagonals on this board contain conflicts
