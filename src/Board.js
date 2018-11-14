@@ -79,28 +79,30 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      var row = this.rows()[rowIndex]
-      if (row.reduce(function(accumulator, piece) {
+      var row = this.rows()[rowIndex];
+      var qtyPieces = row.reduce(function(accumulator, piece) {
         return accumulator += piece;
-      }, 0) > 1) {
-        return true;
-      } else {
-        return false; 
-      }
+      }, 0);
+
+      // Reduces the 'pieces' on a board to a single value. 
+      // Since each piece represents 1, if you reduce the row
+      // and the total is more than `1`, we know that there are 
+      // multiple pieces in a row. Therefore, there is a conflict. 
+  
+      return qtyPieces > 1 ? true : false; 
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       var rows = this.rows();
       var result = false;
-
+      //Loop applies the hasRowConflict method to every row on a given board.
       for (var i = 0; i < rows.length; i++) {
         if (this.hasRowConflictAt(i)) {
           result = true; 
         }
       }
       return result; 
-
     },
 
     // COLUMNS - run from top to bottom
