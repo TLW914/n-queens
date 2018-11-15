@@ -18,7 +18,7 @@
 //Output: a matrix that represents the solution. 
 //Complexity: 
 
-window.findNRooksSolution = function(n) {
+window.findNRooksSolution = function (n) {
   var solution = undefined; //fixme
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
@@ -34,7 +34,7 @@ window.findNRooksSolution = function(n) {
 //Output: # of valid solutions of (n) rooks 
 //Complexity: 
 
-window.countNRooksSolutions = function(n) {
+window.countNRooksSolutions = function (n) {
   var solutionCount = undefined; //fixme
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
@@ -50,7 +50,7 @@ window.countNRooksSolutions = function(n) {
 //Output: a matrix that represents a single solution of (n) board/ (n) queens 
 //Complexity: 
 
-window.findNQueensSolution = function(n) {
+window.findNQueensSolution = function (n) {
   var solution = undefined; //fixme
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
@@ -66,7 +66,7 @@ window.findNQueensSolution = function(n) {
 //Output: # of valid solutions of (n) rooks
 //Complexity: 
 
-window.countNQueensSolutions = function(n) {
+window.countNQueensSolutions = function (n) {
   var solutionCount = undefined; //fixme
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);

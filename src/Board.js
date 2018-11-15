@@ -144,38 +144,33 @@
     // the major diagonals will start from first row in each column.
     // However, if the index is negative, it will start from the first
     // column in the row represented by positive version of index.
-    hasMajorDiagonalConflictAt: function (startingIndex) {
+    hasMajorDiagonalConflictAt: function (majorDiagonalColumnIndexAtFirstRow) {
+      var index = majorDiagonalColumnIndexAtFirstRow;
+      var matrix = this.rows();
       var counter = 0;
-      //Checks if startingIndex is positive (Starting from elements in first row)
-      if (startingIndex > 0) {
-        var index = startingIndex
-        matrix.forEach(function (row) {
-          if ((row[index] === 1) && (row[index] !== undefined)) {
+
+      for (var i = 0; i < matrix.length; i++) {
+        for (var j = 0; j < matrix[i].length; j++) {
+          if (this._getFirstRowColumnIndexForMajorDiagonalOn(i, j) === index && matrix[i][j] === 1) {
             counter++;
           }
-          index++;
-        });
-        return counter > 1 ? true : false; // If more than one value is in the Maj. Diagonal, counter will be more than 1
-
-      } else if (startingIndex < 0) { //Checks if startingIndex is negative (Starting from elements in first column)
-        var start = Math.abs(startingIndex); //Converts starting index to a positive number
-        var index = 0;
-
-        matrix.forEach(function (row, i) {
-          if (i >= start) {
-            if ((row[index] === 1) && (row[index] !== undefined)) {
-              counter++;
-            }
-            index++;
-          }
-        });
-        return counter > 1 ? true : false;
+        }
       }
+      return counter > 1;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function () {
-      return false; // fixme
+      var matrix = this.rows();
+
+      for (var i = 0; i < matrix.length; i++) {
+        for (var j = 0; j < matrix[i].length; j++) {
+          if (this.hasMajorDiagonalConflictAt(i - j)) {
+            return true;
+          }
+        }
+      }
+      return false;
     },
 
 
@@ -184,44 +179,33 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function (startingIndex) {
+    hasMinorDiagonalConflictAt: function (minorDiagonalColumnIndexAtFirstRow) {
+      var index = minorDiagonalColumnIndexAtFirstRow;
+      var matrix = this.rows();
       var counter = 0;
-      var length = (this.rows().length - 1)
-      //Checks if startingIndex is positive (Starting from elements in first row)
-      if (startingIndex <= length) {
-        var index = startingIndex
-        matrix.forEach(function (row) {
-          if ((row[index] === 1) && (row[index] !== undefined)) {
-            counter++;
-          }
-          index--;
-        });
-        return counter > 1 ? true : false; // If more than one value is in the Maj. Diagonal, counter will be more than 1
 
-      } else if (startingIndex > length) { //Checks if startingIndex is negative (Starting from elements in first column)
-        var start = (startingIndex - length); //Converts starting index to a positive number
-        var index = (length);
-
-        matrix.forEach(function (row, i) {
-          if (i >= start) {
-            if ((row[index] === 1) && (row[index] !== undefined)) {
-              counter++;
-            }
-            index--;
+      for (var i = 0; i < matrix.length; i++) {
+        for (var j = 0; j < matrix[i].length; j++) {
+          if (this._getFirstRowColumnIndexForMinorDiagonalOn(i, j) === index && matrix[i][j] === 1) {
+            counter++
           }
-        });
-        return counter > 1 ? true : false;
+        }
       }
+      return counter > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function () {
-      return false; // fixme
+      var matrix = this.rows();
+      for (var i = 0; i < matrix.length; i++) {
+        for (var j = 0; j < matrix[i].length; j++) {
+          if (this.hasMinorDiagonalConflictAt(i + j)) {
+            return true;
+          }
+        }
+      }
+      return false;
     }
-
-    /*--------------------  End of Helper Functions  ---------------------*/
-
-
   });
 
   var makeEmptyMatrix = function (n) {
@@ -232,4 +216,4 @@
     });
   };
 
-}()); 
+}());
