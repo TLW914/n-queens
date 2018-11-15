@@ -21,12 +21,40 @@
 window.findNRooksSolution = function (n) {
   var solution = undefined; //fixme
   var allPossible = [];
+  var board = new Board({ 'n': n });
+  var matrix = board.rows();
+  var piecesPlayed = 0;
 
+
+  var checker = function (matrix) {
+    // if (((!board.hasAnyColConflicts()) && (!board.hasAnyRowConflicts())) && (piecesPlayed === n)) {
+    //   allPossible.push(matrix);
+    // } 
+    for (var r = 0; r < matrix.length; r++) {
+      for (var c = 0; c < matrix.length; c++) {
+        if (matrix[r][c] === 0) {
+          board.togglePiece(r, c);
+          if (!board.hasAnyColConflicts() && !board.hasAnyRowConflicts()) {
+            piecesPlayed++;
+            checker(matrix);
+          } else {
+            board.togglePiece(r, c);
+          }
+        }
+      }
+    }
+    if (piecesPlayed === n) {
+      allPossible.push(matrix);
+      return;
+    }
+  }
+
+
+
+  checker(matrix);
+  solution = allPossible[0];
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-
-  solution.push(allPossible[0]);
   return solution;
-
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
