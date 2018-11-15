@@ -14,25 +14,28 @@
 // Example of (n) Rooks Solution
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-//Input: (n) represnting number of rooks and size of board.  
-//Output: a matrix that represents the solution. 
-//Complexity: 
+//Input: (n) represnting number of rooks and size of board.
+//Output: a single matrix that represents the solution.
+//Complexity:
 
 window.findNRooksSolution = function (n) {
   var solution = undefined; //fixme
+  var allPossible = [];
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+
+  solution.push(allPossible[0]);
   return solution;
 
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// Number of Valid (n) Rooks Solutions 
+// Number of Valid (n) Rooks Solutions
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-//Input: (n) represnting number of rooks and size of board.  
-//Output: # of valid solutions of (n) rooks 
-//Complexity: 
+//Input: (n) represnting number of rooks and size of board.
+//Output: # of valid solutions of (n) rooks
+//Complexity:
 
 window.countNRooksSolutions = function (n) {
   var solutionCount = undefined; //fixme
@@ -47,8 +50,8 @@ window.countNRooksSolutions = function (n) {
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 //Input: (n) representing the number of queens and size of board
-//Output: a matrix that represents a single solution of (n) board/ (n) queens 
-//Complexity: 
+//Output: a matrix that represents a single solution of (n) board/ (n) queens
+//Complexity:
 
 window.findNQueensSolution = function (n) {
   var solution = undefined; //fixme
