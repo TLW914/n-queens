@@ -126,10 +126,9 @@
       for (var i = 0; i < matrix.length; i++) {
         if (this.hasColConflictAt(i)) {
           return true;
-        } else {
-          return false;
         }
       }
+      return false;
     },
 
 

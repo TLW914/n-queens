@@ -21,26 +21,46 @@
 window.findNRooksSolution = function (n) {
   var solution = undefined; //fixme
   var allPossible = [];
-  var board = new Board({ 'n': n });
-  var matrix = board.rows();
+  // var board = new Board({ 'n': n });
+  // var matrix = this.rows();
   var piecesPlayed = 0;
+  var startingBoardIndex = 0;
 
 
-  var checker = function (matrix) {
+  var startingBoards = [];
+
+  for (var i = 0; i < n; i++) {
+    for (var j = 0; j < n; j++) {
+      var board = new Board({ 'n': n });
+      console.log('board', board);
+      board.togglePiece(i, j);
+      startingBoards.push(board);
+    }
+  }
+
+
+
+  var checker = function (matrix, x) {
     // if (((!board.hasAnyColConflicts()) && (!board.hasAnyRowConflicts())) && (piecesPlayed === n)) {
     //   allPossible.push(matrix);
-    // } 
+    // }
+
     for (var r = 0; r < matrix.length; r++) {
       for (var c = 0; c < matrix.length; c++) {
         if (matrix[r][c] === 0) {
-          board.togglePiece(r, c);
-          if (!board.hasAnyColConflicts() && !board.hasAnyRowConflicts()) {
+          startingBoards[x].togglePiece(r, c);
+          if (!startingBoards[x].hasAnyColConflicts() && !startingBoards[x].hasAnyRowConflicts()) {
             piecesPlayed++;
             checker(matrix);
           } else {
-            board.togglePiece(r, c);
+            startingBoards[x].togglePiece(r, c);
           }
         }
+        // if (piecesPlayed === n) {
+        //   allPossible.push(matrix);
+        //   startingBoardIndex++;
+        //   return;
+        // }
       }
     }
     if (piecesPlayed === n) {
@@ -49,11 +69,15 @@ window.findNRooksSolution = function (n) {
     }
   }
 
+  for (var x = 0; x < startingBoards.length; x++) {
+    var matrix = startingBoards[x].rows();
+    checker(matrix, x);
+  }
 
 
-  checker(matrix);
   solution = allPossible[0];
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+  console.log('starting boards', startingBoards);
   return solution;
 };
 
@@ -82,10 +106,6 @@ window.countNRooksSolutions = function (n) {
 //Complexity:
 
 window.findNQueensSolution = function (n) {
-  var solution = undefined; //fixme
-
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution;
 
 };
 
