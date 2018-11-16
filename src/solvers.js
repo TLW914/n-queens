@@ -21,10 +21,10 @@
 window.findNRooksSolution = function (n) {
   var board = new Board({ 'n': n });
   var index = 0
-  var result;
 
   var checker = function (index) {
     if (index === n) {
+      // console.log('rooks', board.rows());
       return board.rows();
       // return;
     }
@@ -37,18 +37,7 @@ window.findNRooksSolution = function (n) {
     }
     // return;
   }
-
   return checker(index);
-  // helper function (recursively call)
-  // if index passed = n, return;
-  // traverse the row w/ for loop (length of row)
-  // each spot on the board, toggle a piece on
-  // Run checks to see if that piece is a conflict
-  // If it is, toggle it off, keep moving thru loop
-  // If it isn't a conflict,
-  // recusively call helper function with a new row (++)
-  // toggle the piece off
-  // return;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,29 +57,18 @@ window.countNRooksSolutions = function (n) {
     if (index === n) {
       counter++;
       return;
-      // return;
     }
     for (var c = 0; c < n; c++) {
       board.togglePiece(index, c);
       if (!board.hasAnyRooksConflicts()) {
-        return checker(index + 1);
+        checker(index + 1);
       }
       board.togglePiece(index, c);
     }
-    // return;
+    return;
   }
 
   checker(index);
-  // helper function (recursively call)
-  // if index passed = n, return;
-  // traverse the row w/ for loop (length of row)
-  // each spot on the board, toggle a piece on
-  // Run checks to see if that piece is a conflict
-  // If it is, toggle it off, keep moving thru loop
-  // If it isn't a conflict,
-  // recusively call helper function with a new row (++)
-  // toggle the piece off
-  // return;
   return counter;
 };
 
@@ -103,7 +81,35 @@ window.countNRooksSolutions = function (n) {
 //Complexity:
 
 window.findNQueensSolution = function (n) {
+  // var board = new Board({ 'n': n });
+  // var index = 0
+  // var solution;
 
+  // if (n === 2 || n === 3) {
+  //   return 0;
+  // } else if (n === 0 || n === 1) {
+  //   return 1;
+  // }
+
+  // var checker = function (index) {
+  //   if (index === n) {
+  //     // console.log('rooks', board.rows());
+  //     solution = board.rows();
+  //     // return;
+  //   }
+  //   for (var c = 0; c < n; c++) {
+  //     if (solution === undefined) {
+  //       board.togglePiece(index, c);
+  //       if (!board.hasAnyQueensConflicts()) {
+  //         checker(index + 1);
+  //       }
+  //       board.togglePiece(index, c);
+  //     }
+  //   }
+  //   // return;
+  // }
+  // checker(index);
+  // return solution;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,14 +118,30 @@ window.findNQueensSolution = function (n) {
 
 //Input: (n) representing the number of queens and size of board
 //Output: # of valid solutions of (n) rooks
-//Complexity: 
+//Complexity:
 
 window.countNQueensSolutions = function (n) {
-  var solutionCount = undefined; //fixme
+  var board = new Board({ 'n': n });
+  var index = 0
+  var counter = 0;
 
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
-  return solutionCount;
+  var checker = function (index) {
+    if (index === n) {
+      counter++;
+      return;
+    }
+    for (var c = 0; c < n; c++) {
+      board.togglePiece(index, c);
+      if (!board.hasAnyQueensConflicts()) {
+        checker(index + 1);
+      }
+      board.togglePiece(index, c);
+    }
+    return;
+  }
 
+  checker(index);
+  return counter;
 };
 
 
