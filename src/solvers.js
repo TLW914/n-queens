@@ -23,7 +23,7 @@ window.findNRooksSolution = function (n) {
   var allPossible = [];
   // var board = new Board({ 'n': n });
   // var matrix = this.rows();
-  var piecesPlayed = 0;
+  var piecesPlayed = 1;
   var startingBoardIndex = 0;
 
 
@@ -32,7 +32,6 @@ window.findNRooksSolution = function (n) {
   for (var i = 0; i < n; i++) {
     for (var j = 0; j < n; j++) {
       var board = new Board({ 'n': n });
-      console.log('board', board);
       board.togglePiece(i, j);
       startingBoards.push(board);
     }
@@ -51,7 +50,7 @@ window.findNRooksSolution = function (n) {
           startingBoards[x].togglePiece(r, c);
           if (!startingBoards[x].hasAnyColConflicts() && !startingBoards[x].hasAnyRowConflicts()) {
             piecesPlayed++;
-            checker(matrix);
+            checker(matrix, x);
           } else {
             startingBoards[x].togglePiece(r, c);
           }
@@ -64,10 +63,10 @@ window.findNRooksSolution = function (n) {
       }
     }
     if (piecesPlayed === n) {
-      allPossible.push(matrix);
+      allPossible.push(startingBoards[x].rows());
       return;
     }
-  }
+  };
 
   for (var x = 0; x < startingBoards.length; x++) {
     var matrix = startingBoards[x].rows();
@@ -76,8 +75,8 @@ window.findNRooksSolution = function (n) {
 
 
   solution = allPossible[0];
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  console.log('starting boards', startingBoards);
+  console.log('initial boards', startingBoards);
+  console.log('all solutions', allPossible);
   return solution;
 };
 
