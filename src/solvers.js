@@ -19,65 +19,36 @@
 //Complexity:
 
 window.findNRooksSolution = function (n) {
-  var solution = undefined; //fixme
-  var allPossible = [];
-  // var board = new Board({ 'n': n });
-  // var matrix = this.rows();
-  var piecesPlayed = 1;
-  var startingBoardIndex = 0;
+  var board = new Board({ 'n': n });
+  var index = 0
+  var result;
 
-
-  var startingBoards = [];
-
-  for (var i = 0; i < n; i++) {
-    for (var j = 0; j < n; j++) {
-      var board = new Board({ 'n': n });
-      board.togglePiece(i, j);
-      startingBoards.push(board);
+  var checker = function (index) {
+    if (index === n) {
+      return board.rows();
+      // return;
     }
-  }
-
-
-
-  var checker = function (matrix, x) {
-    // if (((!board.hasAnyColConflicts()) && (!board.hasAnyRowConflicts())) && (piecesPlayed === n)) {
-    //   allPossible.push(matrix);
-    // }
-
-    for (var r = 0; r < matrix.length; r++) {
-      for (var c = 0; c < matrix.length; c++) {
-        if (matrix[r][c] === 0) {
-          startingBoards[x].togglePiece(r, c);
-          if (!startingBoards[x].hasAnyColConflicts() && !startingBoards[x].hasAnyRowConflicts()) {
-            piecesPlayed++;
-            checker(matrix, x);
-          } else {
-            startingBoards[x].togglePiece(r, c);
-          }
-        }
-        // if (piecesPlayed === n) {
-        //   allPossible.push(matrix);
-        //   startingBoardIndex++;
-        //   return;
-        // }
+    for (var c = 0; c < n; c++) {
+      board.togglePiece(index, c);
+      if (!board.hasAnyRooksConflicts()) {
+        return checker(index + 1);
       }
+      board.togglePiece(index, c);
     }
-    if (piecesPlayed === n) {
-      allPossible.push(startingBoards[x].rows());
-      return;
-    }
-  };
-
-  for (var x = 0; x < startingBoards.length; x++) {
-    var matrix = startingBoards[x].rows();
-    checker(matrix, x);
+    // return;
   }
 
-
-  solution = allPossible[0];
-  console.log('initial boards', startingBoards);
-  console.log('all solutions', allPossible);
-  return solution;
+  return checker(index);
+  // helper function (recursively call)
+  // if index passed = n, return;
+  // traverse the row w/ for loop (length of row)
+  // each spot on the board, toggle a piece on
+  // Run checks to see if that piece is a conflict
+  // If it is, toggle it off, keep moving thru loop
+  // If it isn't a conflict,
+  // recusively call helper function with a new row (++)
+  // toggle the piece off
+  // return;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,11 +60,38 @@ window.findNRooksSolution = function (n) {
 //Complexity:
 
 window.countNRooksSolutions = function (n) {
-  var solutionCount = undefined; //fixme
+  var board = new Board({ 'n': n });
+  var index = 0
+  var counter = 0;
 
-  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
-  return solutionCount;
+  var checker = function (index) {
+    if (index === n) {
+      counter++;
+      return;
+      // return;
+    }
+    for (var c = 0; c < n; c++) {
+      board.togglePiece(index, c);
+      if (!board.hasAnyRooksConflicts()) {
+        return checker(index + 1);
+      }
+      board.togglePiece(index, c);
+    }
+    // return;
+  }
 
+  checker(index);
+  // helper function (recursively call)
+  // if index passed = n, return;
+  // traverse the row w/ for loop (length of row)
+  // each spot on the board, toggle a piece on
+  // Run checks to see if that piece is a conflict
+  // If it is, toggle it off, keep moving thru loop
+  // If it isn't a conflict,
+  // recusively call helper function with a new row (++)
+  // toggle the piece off
+  // return;
+  return counter;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,3 +121,70 @@ window.countNQueensSolutions = function (n) {
   return solutionCount;
 
 };
+
+
+
+
+///////// Crazy stuff /////////
+
+    // var solution = undefined; //fixme
+  // var allPossible = [];
+  // // var board = new Board({ 'n': n });
+  // // var matrix = this.rows();
+  // var piecesPlayed = 1;
+  // var startingBoardIndex = 0;
+
+
+  // var startingBoards = [];
+
+  // for (var i = 0; i < n; i++) {
+  //   for (var j = 0; j < n; j++) {
+  //     var board = new Board({ 'n': n });
+  //     board.togglePiece(i, j);
+  //     startingBoards.push(board);
+  //   }
+  // }
+
+
+
+  // var checker = function (matrix, x) {
+  // //
+  // if (((!board.hasAnyColConflicts()) && (!board.hasAnyRowConflicts())) && (piecesPlayed === n)) {
+  //   //   allPossible.push(matrix);
+  //   // }
+
+  //   for (var r = 0; r < matrix.length; r++) {
+  //     for (var c = 0; c < matrix.length; c++) {
+  //       if (matrix[r][c] === 0) {
+  //         startingBoards[x].togglePiece(r, c);
+  //         if (!startingBoards[x].hasAnyColConflicts() && !startingBoards[x].hasAnyRowConflicts()) {
+  //           piecesPlayed++;
+  //           checker(matrix, x);
+  //         } else {
+  //           startingBoards[x].togglePiece(r, c);
+  //         }
+  //       }
+  //       // if (piecesPlayed === n) {
+  //       //   allPossible.push(matrix);
+  //       //   startingBoardIndex++;
+  //       //   return;
+  //       // }
+  //     }
+  //   }
+  //   if (piecesPlayed === n) {
+  //     allPossible.push(startingBoards[x].rows());
+  //     piecesPlayed = 1;
+  //     return;
+  //   }
+  // };
+
+  // for (var x = 0; x < startingBoards.length; x++) {
+  //   var matrix = startingBoards[x].rows();
+  //   checker(matrix, x);
+  // }
+
+
+  // solution = allPossible[0];
+  // console.log('initial boards', startingBoards);
+  // console.log('all solutions', allPossible);
+  // return solution;
